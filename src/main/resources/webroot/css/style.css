@@ -1,0 +1,247 @@
+@charset "utf-8";
+
+:root {
+  --input-bottom-line-color: rgba(42, 42, 42, 0.4);
+  --input-bottom-line-focus-color: rgb(255, 112, 67);
+  --input-placeholder-color: rgba(42, 42, 42, 0.4);
+  --input-hint-color: rgba(42, 42, 42, 0.4);
+  --button-text-color: rgb(255, 255, 255);
+  --button-background-color: rgb(255, 112, 67);
+  --button-hover-background-color: rgba(255, 112, 67, 0.82);
+  --button-active-background-color: rgba(255, 112, 67, 0.9);
+  --button-disabled-background-color: rgba(42, 42, 42, 0.8);
+}
+
+*:not(body) {
+  transition: all 0.5s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body#baka-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#baka-background {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#baka-header {
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  position: fixed;
+  padding: 18px 15px;
+  color: #fff;
+  background-color: rgba(255, 112, 67, 0);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+}
+
+#baka-header .button {
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+}
+
+#baka-header .button i {
+  font-size: 30px;
+}
+
+#baka-header .title {
+  font-size: 24px;
+}
+
+main#baka-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 内容容器 */
+.baka-content-card {
+  width: 1600px;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 15px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.search-title {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.search-title span {
+  font-size: 35px;
+}
+
+/* 容器 */
+.baka-content-card .baka-login-box {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.baka-login-box .login-title {
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.baka-content-card .login-input-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.baka-content-card .login-input-box .baka-input {
+  width: 80%;
+  margin-bottom: 30px;
+}
+
+.baka-content-card .login-button {
+  width: 80%;
+  height: 52px;
+}
+
+.baka-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 30px;
+  margin-left: 80px;
+}
+
+.baka-box input {
+  width: 500px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: rgba(255, 125, 38, 1) 2px solid;
+  border-radius: 10px;
+  text-indent: 15px;
+  font-size: 16px;
+}
+
+/* 按钮 */
+.baka-button {
+  transition: all 0.5s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+}
+
+.baka-button {
+  color: var(--button-text-color);
+  display: inline-block;
+  box-sizing: border-box;
+  height: 40px;
+  width: 100px;
+  margin: 0;
+  margin-left: 25px;
+  padding: 0 16px;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  vertical-align: middle;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  will-change: box-shadow;
+  zoom: 1;
+  -webkit-user-drag: none;
+  background-color: var(--button-background-color);
+}
+
+.baka-button:not([disabled]):hover {
+  background-color: var(--button-hover-background-color);
+  box-shadow: 0 0 8px 0 rgba(42, 42, 42, 0.25);
+  transform: scale(1.03);
+}
+
+.baka-button:not([disabled]):active {
+  background-color: var(--button-active-background-color);
+  box-shadow: 0 0 8px 0 rgba(42, 42, 42, 0);
+  transform: scale(1);
+}
+
+.baka-button[disabled] {
+  cursor: not-allowed;
+  background-color: var(--button-disabled-background-color) !important;
+}
+
+#baka-footer {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  position: fixed;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  padding: 15px 0;
+  background-image: linear-gradient(transparent, rgb(0, 0, 0, 0.85));
+}
+
+#baka-footer a {
+  text-decoration: none;
+  color: rgb(255, 112, 67);
+}
+
+/* 媒体查询 */
+@media (max-width: 1400px) {
+  .baka-content-card {
+    width: 95%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .baka-content-card {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    flex-direction: column;
+  }
+
+  .baka-content-card .baka-cover-box,
+  .baka-content-card .baka-login-box {
+    width: 100%;
+  }
+
+  #baka-header {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 112, 67, 0.82);
+  }
+}
