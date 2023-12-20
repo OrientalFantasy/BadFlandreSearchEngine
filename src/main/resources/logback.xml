@@ -1,0 +1,43 @@
+<configuration debug="false">
+
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+    <property name="CONSOLE_LOG_PATTERN" value="%highlight([%d{HH:mm:ss}]) %highlight([BadFlandre's Search Engine %-6thread/%-5level]) %highlight(%msg%n)"/>
+    <property name="FILE_LOG_PATTERN" value="[%d{HH:mm:ss}] [BadFlandre's Search Engine %-6thread/%-5level] %msg%n"/>
+
+    <property name="LOG_FILE_LOCATION" value="./logs" />
+
+    <property name="LOG_FILE_NAME" value="log-%d{yyyy-MM-dd_HH}.log" />
+    <property name="LOG_FILE_COMPRESS_NAME" value="log-%d{yyyy-MM-dd_HH}.%i.log.gz" />
+
+    <!--    <contextName>Concatenate</contextName>-->
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+            <!--<pattern>[%d{HH:mm:ss}] [Launcher %thread/%level]: %msg%n</pattern>-->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <!--设置 控制台 输出信息编码格式-->
+            <charset>GB2312</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_LOCATION}/${LOG_FILE_NAME}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_FILE_LOCATION}/${LOG_FILE_COMPRESS_NAME}</FileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>30MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
