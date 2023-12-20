@@ -5,18 +5,14 @@
     <title>芙兰朵露の搜索引擎</title>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/font/iconfont/iconfont.css" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <script src="./js/vue3.js"></script>
+    <link rel="stylesheet" href="./css/mdui.css">
+    <script src="./js/mdui.js"></script>
   </head>
 
   <body id="baka-app">
-    <div
-      id="baka-background"
-      style="background-image: url('./img/bg.jpg')"
-    ></div>
-
+    <div id="baka-background" style="background-image: url('./img/bg.jpg')"></div>
     <header id="baka-header">
       <div class="title">芙兰朵露の搜索引擎</div>
     </header>
@@ -26,20 +22,44 @@
         <div class="search-title">
           <span>芙兰朵露の搜索引擎</span>
         </div>
-        <div class="baka-box">
-          <div class="input-box">
-            <input type="text" placeholder="请输入检索内容" />
-            <button class="baka-button">检索</button>
+        <div class="mdui-container">
+
+          <div class="mdui-row" style="padding-bottom: 50px">
+            <div class="mdui-col-xs-12 baka-box">
+              <div class="input-box">
+                <input type="text" placeholder="请输入检索内容" />
+                <button class="baka-button">检索 </button>
+              </div>
+            </div>
           </div>
+
+          <div class="mdui-row">
+            <div class="mdui-col-xs-12">
+              <ul class="mdui-list mdui-list-dense">
+                <template v-for="item in data">
+                  <li class="mdui-list-item mdui-ripple">
+                    <a :href="item.url" target="_blank" style="width: 100%">
+                      <div class="mdui-list-item-content">
+                        <div class="mdui-list-item-title">{{ item.title }}</div>
+                        <div class="mdui-list-item-text mdui-list-item-three-line">
+                          <span class="mdui-text-color-theme-text">{{ item.content }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="mdui-divider-inset mdui-m-y-0"></li>
+                </template>
+              </ul>
+            </div>
+          </div>
+
         </div>
       </div>
     </main>
 
     <footer id="baka-footer">
       Copyright &copy <span id="year"></span> <a href="#">东方幻梦</a> |
-      <a href="https://beian.miit.gov.cn/" target="_blank"
-        >滇ICP备 XXXXXXXXX 号</a
-      >
+      <a href="https://beian.miit.gov.cn/" target="_blank">滇ICP备 XXXXXXXXX 号</a>
     </footer>
     <script src="./js/script.js"></script>
   </body>
