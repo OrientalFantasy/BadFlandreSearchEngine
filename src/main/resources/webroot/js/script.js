@@ -6,7 +6,6 @@ const { createApp, ref, reactive, computed } = Vue;
 
 createApp({
     setup() {
-
         let keyword = ref('')
         let totalItem = ref(0),
             groupedData = ref([]),
@@ -89,10 +88,12 @@ createApp({
 }).mount('#baka-app');
 
 async function query(keyword) {
+    console.log(111)
     return new Promise((resolve, reject) => {
-        fetch('a?submit=' + encodeURIComponent(keyword)).then((result) => {
-            let resJson = result.json()
-            if (resJson.errorMsg !== undefined) {
+        fetch('/a?submit=' + encodeURIComponent(keyword)).then(async(result) => {
+            let resJson = await result.json()
+            console.log(resJson)
+            if (resJson.errorMsg === undefined) {
                 const data = resJson.data
                 const totalPage = Math.ceil(data.length / 15)
                 const groupedData = []
@@ -112,7 +113,7 @@ async function query(keyword) {
                     totalPage,
                     totalItem: data.length,
                 })
-            } else reject(resJson.errorMsg)
+            } else reject("服务器错误: " + resJson.errorMsg)
         }).catch((e) => reject("获取数据的时候发生错误 " + e))
     })
 }
