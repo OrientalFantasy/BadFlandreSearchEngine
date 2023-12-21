@@ -29,4 +29,5 @@ build
 .gradle
 .logs
 logs
-
+config.properties
+indexes
