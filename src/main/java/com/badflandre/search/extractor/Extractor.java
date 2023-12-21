@@ -10,6 +10,9 @@ import com.badflandre.search.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Extractor implements Runnable {
     private String filename;
     private Parser parser;
@@ -78,13 +81,20 @@ public class Extractor implements Runnable {
     }
 
     private String getUrl(String filename) {
-        String url = filename;
-        url = url.replace(mirrorPath + "/mirror", "");
-        if (url.lastIndexOf("/") == url.length() - 1) {
-            url = url.substring(0, url.length() - 1);
+
+        Path filePath = Paths.get(filename);
+        Path mirrorPath = Paths.get(this.mirrorPath);
+        if (filePath.startsWith(mirrorPath)) {
+            return "http://" + mirrorPath.relativize(filePath).toString().replace("\\", "/");
+        } else {
+            String url = filename;
+            url = url.replace(mirrorPath + "/mirror", "");
+            if (url.lastIndexOf("/") == url.length() - 1) {
+                url = url.substring(0, url.length() - 1);
+            }
+            url = url.substring(1);
+            return "http://" + url.replace("\\", "/");
         }
-        url = url.substring(1);
-        return url;
     }
 
     private int getScore(String url, int score) {
@@ -123,6 +133,7 @@ public class Extractor implements Runnable {
             } else {
                 this.page.SetContext(combineNodeText(visitor.getBody().toNodeArray()));
             }
+
             this.page.setScore(getScore(this.page.getUrl(), this.page.getScore()));
 
             this.page.setSummary(getSummary(this.page.getContext()));

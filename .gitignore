@@ -31,3 +31,5 @@ build
 logs
 config.properties
 indexes
+files
+mirror

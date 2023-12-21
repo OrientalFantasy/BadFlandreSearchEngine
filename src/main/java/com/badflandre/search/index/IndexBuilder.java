@@ -37,6 +37,7 @@ public class IndexBuilder {
             }
             writer.addDocument(doc);
         }
+        System.out.println();
         writer.optimize();
         writer.close();
         reader.close();
