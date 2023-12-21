@@ -19,24 +19,33 @@
 
     <main id="baka-content">
       <div class="baka-content-card">
-        <div class="search-title">
-          <span>芙兰朵露の搜索引擎</span>
-        </div>
+        <div class="search-title"><span>芙兰朵露の搜索引擎</span></div>
         <div class="mdui-container">
 
-          <div class="mdui-row" style="padding-bottom: 50px">
+          <div class="mdui-row" style="padding-bottom: 30px">
             <div class="mdui-col-xs-12 baka-box">
               <div class="input-box">
-                <input type="text" placeholder="请输入检索内容" />
-                <button class="baka-button">检索 </button>
+                <input type="text" placeholder="请输入检索内容" v-model="keyword" />
+                <button class="baka-button" @click="onQueryClick"> 检索 </button>
               </div>
             </div>
           </div>
 
-          <div class="mdui-row">
-            <div class="mdui-col-xs-12">
+
+          <div class="mdui-row" v-if="totalItem > 0">
+            <div class="mdui-col-xs-3" style="padding-left: 20px; padding-bottom: 10px">
+              <div style="display: flex; justify-content: center; flex-direction: column"> 共检索到了 {{ totalItem }} 条数据 </div>
+            </div>
+          </div>
+
+          <div v-if="isWaitingForData" class="mdui-row" style="display: flex; justify-content: center" >
+            <div class="mdui-spinner mdui-spinner-colorful"></div>
+          </div>
+
+          <div class="mdui-row" >
+            <div class="mdui-col-xs-12" style="overflow: scroll; height: 40vh">
               <ul class="mdui-list mdui-list-dense">
-                <template v-for="item in data">
+                <template v-for="item in currentList">
                   <li class="mdui-list-item mdui-ripple">
                     <a :href="item.url" target="_blank" style="width: 100%">
                       <div class="mdui-list-item-content">
@@ -50,6 +59,14 @@
                   <li class="mdui-divider-inset mdui-m-y-0"></li>
                 </template>
               </ul>
+            </div>
+          </div>
+
+          <div class="mdui-row" style="padding-top: 20px; width: 100%; display: flex; justify-content: center" v-if="totalItem > 0">
+            <div class="mdui-col-xs-8" style="display: flex; justify-content: center">
+              <button @click="previousPage()" class="mdui-btn" style="margin-right: 20px" :disabled="!hasPreviousPage()">上一页</button>
+              <div style="display: flex; justify-content: center; flex-direction: column"> {{ currentPage }} / {{ totalPage }} </div>
+              <button @click="nextPage()" class="mdui-btn" style="margin-left: 20px" :disabled="!hasNextPage()">下一页</button>
             </div>
           </div>
 
