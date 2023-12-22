@@ -1,26 +1,23 @@
-
 const { createApp, ref, reactive, computed, onBeforeUpdate} = Vue
+
 
 createApp({
     setup() {
-        let keyword = ref('')
-        let totalItem = ref(0),
+        let keyword = ref(''),
+            totalItem = ref(0),
             groupedData = ref([]),
-            // errorMsg = ref(null),
-            totalPage = ref(0)
+            totalPage = ref(0),
+            currentIndex = ref(0),
+            currentList = ref([]),
+            isWaitingForData = ref(false),
+            year = new Date().getFullYear().toString()
 
-        let currentIndex = ref(0)
-        let currentList = ref([])
-        let isWaitingForData = ref(false)
-        let year = new Date().getFullYear().toString()
+        const poemList = poem.split('\n').map(i=>i.trim()).filter(i=>i!=='')
+        console.log(poemList)
 
-        const poemList = [
-            "1", "2", "3"
-        ]
-
-        let randomPoem = () => poemList[Math.floor(Math.random() * poemList.length)]
-        let currentPoem = ref(randomPoem())
-        onBeforeUpdate(() => currentPoem.value = randomPoem())
+        let randomPoem = () => poemList[Math.floor(Math.random() * poemList.length)],
+            currentPoem = ref(randomPoem())
+        // onBeforeUpdate(() => currentPoem.value = randomPoem())
 
         return {
             currentList,
@@ -49,10 +46,15 @@ createApp({
             },
             async onQueryClick () {
                 if (keyword.value == null || keyword.value.trim() === '') {
-                    mdui.snackbar({
-                        message: '请输入关键词!',
-                        position: 'top'
-                    });
+                     mdui.dialog({
+                        title: '<font style="color:red;">小恶魔</font>',
+                        content: '<font style="color:red;">请给我要检索的信息哦~</font>',
+                        buttons: [
+                            {
+                                text: '我知道了'
+                            }
+                        ]
+                    })
                     keyword.value = ''
                 } else {
                     isWaitingForData.value = true
@@ -60,8 +62,8 @@ createApp({
                         let result = await query(keyword.value)
                         if (result.totalItem === 0) {
                             mdui.dialog({
-                                title: '小恶魔的温馨提示',
-                                content: '没有在图书馆找到有关条目哦~',
+                                title: '<font style="color:red;">小恶魔</font>',
+                                content: '<font style="color:red;">伏瓦鲁魔法图书馆暂未收录有关条目哦~</font>',
                                 buttons: [
                                     {
                                         text: '我知道了'
@@ -78,11 +80,11 @@ createApp({
                         }
                     } catch (e) {
                         mdui.dialog({
-                            title: '检索错误',
-                            content: e,
+                            title: '<font style="color:red;">小恶魔</font>',
+                            content: '<font style="color:red;">遭遇了奇怪的异变！以下是或许有些帮助的神秘提示！</font><br>' + e,
                             buttons: [
                                 {
-                                    text: '确认'
+                                    text: '我知道了'
                                 }
                             ]
                         });
@@ -98,7 +100,7 @@ createApp({
 async function query(keyword) {
     // console.log(111)
     return new Promise((resolve, reject) => {
-        fetch('/a?submit=' + encodeURIComponent(keyword)).then(async(result) => {
+        fetch('/search?submit=' + encodeURIComponent(keyword)).then(async(result) => {
             let resJson = await result.json()
             // console.log(resJson)
             if (resJson.errorMsg === undefined) {

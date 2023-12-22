@@ -6,23 +6,23 @@
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/font/iconfont/iconfont.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-    <script src="./js/vue3.js"></script>
+    <script src="./js/vue.global.prod.js"></script>
     <link rel="stylesheet" href="./css/mdui.css">
     <script src="./js/mdui.js"></script>
   </head>
 
   <body id="baka-app">
-    <div id="baka-background" style="background-image: url('./img/bg.jpg')"></div>
+    <div id="baka-background" style="background-image: url('./img/bg.jpg');"></div>
     <header id="baka-header">
-      <div class="title">芙兰朵露の搜索引擎</div>
+      <div class="title">ヴワル魔法図書館</div>
     </header>
 
     <main id="baka-content">
       <div class="baka-content-card">
-        <div class="search-title"><span>芙兰朵露の搜索引擎</span></div>
+        <div class="search-title"><span>伏瓦鲁魔法图书馆</span></div>
         <div class="mdui-container">
 
-          <div class="mdui-row" style="padding-bottom: 30px">
+          <div class="mdui-row" style="padding-bottom: 30px;">
             <div class="mdui-col-xs-12 baka-box">
               <div class="input-box">
                 <input type="text" placeholder="请输入检索内容" v-model="keyword" />
@@ -33,29 +33,42 @@
 
 
           <div class="mdui-row" v-if="totalItem > 0">
-            <div class="mdui-col-xs-3" style="padding-left: 20px; padding-bottom: 10px">
-              <div style="display: flex; justify-content: center; flex-direction: column"> 共检索到了 {{ totalItem }} 条数据 </div>
+            <div class="mdui-col-xs-3" style="padding-left: 20px; padding-bottom: 10px;">
+              <div style="display: flex; justify-content: center; flex-direction: column; font-size: 24px;"> 共检索到了 {{ totalItem }} 条数据 </div>
             </div>
           </div>
 
           <div class="mdui-row" v-if="totalItem <= 0">
-            <div style="display: flex; justify-content: center"> {{ currentPoem }} </div>
+            <div style="height: 40vh; display: flex; flex-direction: column; justify-content: center;">
+              <div style="display: flex; justify-content: center;">
+
+                <div style=" border: 2px solid #797979; border-top: none; padding: 0 50px 50px 50px; position: relative">
+                  <div style="height: 2px; width: 27%; background-color: #797979; position: absolute; left: 0;"></div>
+                  <div style="height: 2px; width: 27%; background-color: #797979; position: absolute; right: 0;"></div>
+                  <div style="margin-top: -36px; width: 100%">
+                    <h1 style=" text-align: center; ">呢喃</h1>
+                  </div>
+                  <p style="font-size: 30px; line-height: 1.5; padding-top: 36px;">{{ currentPoem }}</p>
+                </div>
+
+              </div>
+            </div>
           </div>
 
-          <div v-if="isWaitingForData" class="mdui-row" style="display: flex; justify-content: center" >
+          <div v-if="isWaitingForData" class="mdui-row" style="display: flex; justify-content: center;" >
             <div class="mdui-spinner mdui-spinner-colorful"></div>
           </div>
 
           <div class="mdui-row" >
-            <div class="mdui-col-xs-12" style="overflow: scroll; height: 40vh">
+            <div class="mdui-col-xs-12" style="overflow: scroll; height: 40vh;">
               <ul class="mdui-list mdui-list-dense">
                 <template v-for="item in currentList">
                   <li class="mdui-list-item mdui-ripple">
-                    <a :href="item.url" target="_blank" style="width: 100%">
+                    <a :href="item.url" target="_blank" style="width: 100%;">
                       <div class="mdui-list-item-content">
-                        <div class="mdui-list-item-title">{{ item.title }}</div>
+                        <div class="mdui-list-item-title baka-card-title">{{ item.title }}</div>
                         <div class="mdui-list-item-text mdui-list-item-three-line">
-                          <span class="mdui-text-color-theme-text">{{ item.content }}</span>
+                          <span class="mdui-text-color-theme-text" style="color: black !important;">{{ item.content }}</span>
                         </div>
                       </div>
                     </a>
@@ -66,11 +79,11 @@
             </div>
           </div>
 
-          <div class="mdui-row" style="padding-top: 20px; width: 100%; display: flex; justify-content: center" v-if="totalItem > 0">
-            <div class="mdui-col-xs-8" style="display: flex; justify-content: center">
-              <button @click="previousPage()" class="mdui-btn" style="margin-right: 20px" :disabled="!hasPreviousPage()">上一页</button>
-              <div style="display: flex; justify-content: center; flex-direction: column"> {{ currentPage }} / {{ totalPage }} </div>
-              <button @click="nextPage()" class="mdui-btn" style="margin-left: 20px" :disabled="!hasNextPage()">下一页</button>
+          <div class="mdui-row" style="padding-top: 20px; width: 100%; display: flex; justify-content: center;" v-if="totalItem > 0">
+            <div class="mdui-col-xs-8" style="display: flex; justify-content: center;">
+              <button @click="previousPage()" class="mdui-btn" style="margin-right: 20px;" :disabled="!hasPreviousPage()">上一页</button>
+              <div style="display: flex; justify-content: center; flex-direction: column;"> {{ currentPage }} / {{ totalPage }} </div>
+              <button @click="nextPage()" class="mdui-btn" style="margin-left: 20px;" :disabled="!hasNextPage()">下一页</button>
             </div>
           </div>
 
@@ -79,9 +92,12 @@
     </main>
 
     <footer id="baka-footer">
-      Copyright &copy <span>{{ year }}</span> <a href="#">东方幻梦</a> |
+      Copyright &copy <span>{{ year }}</span> <a href="./">ヴワル魔法図書館</a> |
+      Background：<a href="https://www.pixiv.net/artworks/47424126" target="_blank">Pixiv/雛見</a> |
+      Blog：<a href="https://blog.badapple.pro/" target="_blank">东方幻梦</a> |
       <a href="https://beian.miit.gov.cn/" target="_blank">滇ICP备 XXXXXXXXX 号</a>
     </footer>
+    <script src="./js/poem.js"></script>
     <script src="./js/script.js"></script>
   </body>
 </html>

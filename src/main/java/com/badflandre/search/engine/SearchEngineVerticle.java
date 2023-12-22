@@ -60,7 +60,7 @@ public class SearchEngineVerticle extends AbstractVerticle {
                 .write(indexPage)
         );
 
-        router.get("/a").handler(ctx -> {
+        router.get("/search").handler(ctx -> {
             MultiMap queryParams = ctx.queryParams();
             String key = queryParams.contains("submit") ? queryParams.get("submit") : null;
             if (key == null)

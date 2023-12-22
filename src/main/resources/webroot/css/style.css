@@ -1,7 +1,5 @@
 @charset "utf-8";
 
-
-
 /* 滚动条样式 */
 html::-webkit-scrollbar-track-piece {
   background: rgba(0, 0, 0, 0);
@@ -24,8 +22,6 @@ html::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0);
 }
 
-
-
 :root {
   --input-bottom-line-color: rgba(42, 42, 42, 0.4);
   --input-bottom-line-focus-color: rgb(255, 112, 67);
@@ -40,6 +36,20 @@ html::-webkit-scrollbar-thumb:hover {
 
 *:not(body) {
   transition: all 0.5s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+}
+
+@font-face {
+  font-family: "Source Han Serif SC";
+  src: url("./font/SourceHanSerifSC.woff2");
+}
+
+@font-face {
+  font-family: "Source Han Serif J";
+  src: url("./font/SourceHanSerifJ.woff2");
+}
+
+* {
+    font-family: 'Source Han Serif J', 'Source Han Serif SC';
 }
 
 body {
@@ -74,7 +84,7 @@ body#baka-app {
   padding: 18px 15px;
   color: #fff;
   background-color: rgba(255, 112, 67, 0);
-  backdrop-filter: blur(10px);
+/*  backdrop-filter: blur(10px); */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0);
   display: flex;
   align-items: center;
@@ -110,7 +120,7 @@ main#baka-content {
   overflow: hidden;
   margin-top: 15px;
   border-radius: 8px;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   background-color: rgba(255, 255, 255, 0.7);
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
@@ -161,7 +171,7 @@ main#baka-content {
   flex-direction: row;
   justify-content: center;
   margin-top: 30px;
-  margin-left: 80px;
+  margin-left: 75px;
 }
 
 .baka-box input {
@@ -272,3 +282,8 @@ main#baka-content {
   }
 }
 
+.baka-card-title {
+    color: #000;
+    font-size: 18px;
+    padding-bottom: 3px;
+}
