@@ -1,5 +1,8 @@
 # BadFlandreSearchEngine
 
+
+<img src="./.github/patchouli.gif" />
+
 ヴワル魔法図書館 | 伏瓦鲁魔法图书馆 | Voile, the Magic Library
 
 
