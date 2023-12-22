@@ -45,6 +45,7 @@ class SearchEngineCodeCommandLine implements Callable<Integer> {
     @CommandLine.Option(names = {"-protocol"}, defaultValue = "http://", description = {"using when generate url"})
     String protocol;
 
+    // read config
     private Properties loadConfig() throws IOException {
         if (configFile == null) {
             // using default path: ./config.properties
@@ -58,6 +59,7 @@ class SearchEngineCodeCommandLine implements Callable<Integer> {
         return config;
     }
 
+    // parse args
     @Override
     public Integer call() throws Exception {
 

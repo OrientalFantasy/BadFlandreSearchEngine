@@ -54,26 +54,36 @@ public class SearchEngineVerticle extends AbstractVerticle {
 
         Router router = Router.router(vertx);
 
+        // router index page
         router.get("/").respond(ctx -> ctx
                 .response()
                 .setChunked(true)
                 .write(indexPage)
         );
 
+        // search api
         router.get("/search").handler(ctx -> {
+
             MultiMap queryParams = ctx.queryParams();
+            // get query parameter: submit
             String key = queryParams.contains("submit") ? queryParams.get("submit") : null;
             if (key == null)
                 ctx.json(new JsonObject().put("errorMsg", "`submit` parameter must not be null"));
             else {
                 try {
+                    // get ip address
                     String address = ctx.request().connection().remoteAddress().toString();
+                    // decode search keywords
                     String decodedKey = URLDecoder.decode(key, charset.name());
                     String[] keys = decodedKey.split(" ");
                     logger.info("<" + address + "> : " + decodedKey);
+
+                    // if keyword is empty or any of it is empty
                     if (keys.length == 0 || Arrays.stream(keys).anyMatch(p -> p.trim().isEmpty())) {
                         throw new RuntimeException("illegal keys form");
                     }
+
+                    // query data according to keywords
                     QueryData[] res = q.getQueryResult(Arrays.stream(keys).map(String::trim).collect(Collectors.toList()).toArray(new String[]{}));
                     JsonObject json = new JsonObject();
 
@@ -88,6 +98,7 @@ public class SearchEngineVerticle extends AbstractVerticle {
                     }
 
                     json.put("data", array);
+                    // return json
                     ctx.json(json);
                 } catch (IOException e) {
                     ctx.json(new JsonObject().put("errorMsg", e.getMessage()));
@@ -95,9 +106,10 @@ public class SearchEngineVerticle extends AbstractVerticle {
                 }
             }
         });
-
+        // request static resource
         router.route("/*").handler(StaticHandler.create());
 
+        // start a server
         vertx.createHttpServer()
                 .requestHandler(router)
                 .listen(port)
@@ -108,6 +120,7 @@ public class SearchEngineVerticle extends AbstractVerticle {
                 });
     }
 
+    // set system encoding
     private void setSystemEncoding() throws NoSuchFieldException, IllegalAccessException {
         System.setProperty("file.encoding", consoleEncoding);
         Field charset = Charset.class.getDeclaredField("defaultCharset");
@@ -115,6 +128,7 @@ public class SearchEngineVerticle extends AbstractVerticle {
         charset.set(null, null);
     }
 
+    // return index.html
     private String getIndexPage() throws IOException {
         InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("webroot/index.html");
         assert is != null;

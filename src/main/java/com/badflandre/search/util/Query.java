@@ -37,10 +37,6 @@ public class Query {
                     doc.getField("url").stringValue(),
                     doc.getField("context").stringValue()
             );
-
-//            String tmp = doc.getField("title").stringValue();
-//            tmp = tmp + "|" + doc.getField("url").stringValue();
-//            tmp = tmp + "|" + doc.getField("context").stringValue();
             result[i] = qd;
         }
         return result;
