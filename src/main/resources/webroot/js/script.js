@@ -88,11 +88,11 @@ createApp({
 }).mount('#baka-app');
 
 async function query(keyword) {
-    console.log(111)
+    // console.log(111)
     return new Promise((resolve, reject) => {
         fetch('/a?submit=' + encodeURIComponent(keyword)).then(async(result) => {
             let resJson = await result.json()
-            console.log(resJson)
+            // console.log(resJson)
             if (resJson.errorMsg === undefined) {
                 const data = resJson.data
                 const totalPage = Math.ceil(data.length / 15)

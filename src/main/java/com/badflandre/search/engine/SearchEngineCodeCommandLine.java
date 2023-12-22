@@ -1,7 +1,8 @@
-package org.example;
+package com.badflandre.search.engine;
 
 import com.badflandre.search.index.IndexBuilder;
 import com.badflandre.search.util.HtmlExtractor;
+import io.vertx.core.Vertx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
@@ -21,9 +22,9 @@ import java.util.concurrent.Callable;
         mixinStandardHelpOptions = true,
         version = {"0.0.1"},
         description = {"bfse command line tools"})
-class ToolCodeCommandLine implements Callable<Integer> {
+class SearchEngineCodeCommandLine implements Callable<Integer> {
 
-    Logger logger = LoggerFactory.getLogger(ToolCodeCommandLine.class);
+    Logger logger = LoggerFactory.getLogger(SearchEngineCodeCommandLine.class);
 
     @CommandLine.Parameters(index = "0", defaultValue = "server", description = {
             "tool action, can be extract, index or server"})
@@ -32,12 +33,17 @@ class ToolCodeCommandLine implements Callable<Integer> {
     @CommandLine.Option(names = {"-port"}, defaultValue = "25565", description = {"server start port"})
     String port;
 
-    @CommandLine.Option(names = {"-encoding"}, description = {"encoding for extract, default is utf-8"})
+    @CommandLine.Option(names = {"-encoding"}, defaultValue = "UTF-8", description = {"encoding for extract, default is utf-8"})
     String encoding;
 
     @CommandLine.Option(names = {"-config"}, description = {"configuration file path"})
     File configFile;
 
+    @CommandLine.Option(names = {"-urlDecodeEncoding"}, defaultValue = "UTF-8", description = {"using when decode keyword from url"})
+    String urlDecodeEncoding;
+
+    @CommandLine.Option(names = {"-protocol"}, defaultValue = "http://", description = {"using when generate url"})
+    String protocol;
 
     private Properties loadConfig() throws IOException {
         if (configFile == null) {
@@ -73,6 +79,7 @@ class ToolCodeCommandLine implements Callable<Integer> {
             extractor.setMirrorPath(mp.toFile().getAbsolutePath());
             extractor.setOutputPath(fp.toFile().getAbsolutePath());
             extractor.setDefaultEncoding(encoding);
+            extractor.setUrlProtocol(protocol);
 
             extractor.doFinal();
 
@@ -109,7 +116,15 @@ class ToolCodeCommandLine implements Callable<Integer> {
                 throw new RuntimeException("index.path not exists!");
             }
 
-            new MainVerticle(Integer.parseInt(port), ip.toFile().getAbsolutePath()).start();
+            Vertx vertx = Vertx.vertx();
+            vertx.deployVerticle(
+                    new SearchEngineVerticle(
+                            Integer.parseInt(port),
+                            ip.toFile().getAbsolutePath(),
+                            encoding,
+                            urlDecodeEncoding
+                    )
+            );
 
             Scanner scanner = new Scanner(System.in);
             while (true) {

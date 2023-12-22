@@ -1,2 +1,2 @@
-rootProject.name = "BadFlandre_WebProcess"
+rootProject.name = "BadFlandreSearchEngine"
 

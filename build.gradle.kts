@@ -3,10 +3,9 @@ plugins {
     application
 }
 
-group = "org.example"
+group = "com.badflandre.search"
 version = "0.0.1"
-
-val iMainClass = "com.badflandre.search.util.TestExtractor"
+val endpoint = "com.badflandre.search.engine.Main"
 
 repositories {
     mavenCentral()
@@ -36,17 +35,16 @@ tasks.test {
 }
 
 application {
-    mainClass.set(iMainClass)
-    applicationDefaultJvmArgs = listOf(
-        "-Xmx10G",
-        "-Xms2G",
-    )
+    mainClass.set(endpoint)
+//    applicationDefaultJvmArgs = listOf(
+//        "-Xmx10G",
+//        "-Xms2G",
+//    )
 }
 
 tasks.jar {
-
     manifest {
-        attributes("Main-Class" to "org.example.Main")
+        attributes("Main-Class" to endpoint)
     }
 
     from(configurations.runtimeClasspath.get().map {

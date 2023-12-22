@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class HtmlExtractor {
     Logger logger = LoggerFactory.getLogger(HtmlExtractor.class);
+    private String protocol;
 
     public void setMirrorPath(String mirrorPath) {
         this.mirrorPath = mirrorPath;
@@ -19,7 +20,6 @@ public class HtmlExtractor {
     public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
     }
-
 
     public void setDefaultEncoding(String defaultEncoding) {
         this.defaultEncoding = defaultEncoding;
@@ -75,6 +75,7 @@ public class HtmlExtractor {
                 extractor.setMirrorPath(mirrorPath);
                 extractor.setStorePath(outputPath);
                 extractor.setEncode(encode);
+                extractor.setUrlProtocol(protocol);
                 extractor.extract(files[i].getAbsolutePath());
             }
         }
@@ -104,5 +105,9 @@ public class HtmlExtractor {
 //        return flag != 0;
 
 
+    }
+
+    public void setUrlProtocol(String protocol) {
+        this.protocol = protocol;
     }
 }

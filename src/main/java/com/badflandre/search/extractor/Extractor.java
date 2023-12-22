@@ -18,6 +18,7 @@ public class Extractor implements Runnable {
     private Parser parser;
     private Page page;
     private String encode;
+    private String protocol;
 
     public void setMirrorPath(String mirrorPath) {
         this.mirrorPath = mirrorPath;
@@ -82,10 +83,11 @@ public class Extractor implements Runnable {
 
     private String getUrl(String filename) {
 
+        String rProtocol = protocol == null ? "http://" : protocol;
         Path filePath = Paths.get(filename);
         Path mirrorPath = Paths.get(this.mirrorPath);
         if (filePath.startsWith(mirrorPath)) {
-            return "http://" + mirrorPath.relativize(filePath).toString().replace("\\", "/");
+            return rProtocol + mirrorPath.relativize(filePath).toString().replace("\\", "/");
         } else {
             String url = filename;
             url = url.replace(mirrorPath + "/mirror", "");
@@ -93,7 +95,7 @@ public class Extractor implements Runnable {
                 url = url.substring(0, url.length() - 1);
             }
             url = url.substring(1);
-            return "http://" + url.replace("\\", "/");
+            return rProtocol + url.replace("\\", "/");
         }
     }
 
@@ -143,5 +145,9 @@ public class Extractor implements Runnable {
             pe.printStackTrace();
             logger.info("Continue...");
         }
+    }
+
+    public void setUrlProtocol(String protocol) {
+        this.protocol = protocol;
     }
 }
