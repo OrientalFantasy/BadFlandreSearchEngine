@@ -55,6 +55,16 @@ run the command below to build a runnable jar.
 gradlew jar 
 ```
 
+# Tech Stack
+   
+   - Vue
+   - MDUI
+   - Vert.x
+   - htmlparser
+   - apache lucene
+   - ...
+
 # Thanks
 
  - [whiterasbk](https://github.com/whiterasbk)
+ - [Source Han Serif](https://github.com/adobe-fonts/source-han-serif)

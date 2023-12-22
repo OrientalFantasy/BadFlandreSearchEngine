@@ -33,3 +33,5 @@ config.properties
 indexes
 files
 mirror
+
+gradle.properties
