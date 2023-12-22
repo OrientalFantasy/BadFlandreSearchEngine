@@ -50,6 +50,7 @@ public class SearchEngineVerticle extends AbstractVerticle {
         setSystemEncoding();
         Query q = new Query(indexPath);
         String indexPage = getIndexPage();
+        Charset charset = decodeEncoding == null ? StandardCharsets.UTF_8 : Charset.forName(decodeEncoding);
 
         Router router = Router.router(vertx);
 
@@ -67,7 +68,7 @@ public class SearchEngineVerticle extends AbstractVerticle {
             else {
                 try {
                     String address = ctx.request().connection().remoteAddress().toString();
-                    String decodedKey = URLDecoder.decode(key, decodeEncoding == null ? StandardCharsets.UTF_8 : Charset.forName(decodeEncoding));
+                    String decodedKey = URLDecoder.decode(key, charset.name());
                     String[] keys = decodedKey.split(" ");
                     logger.info("<" + address + "> : " + decodedKey);
                     if (keys.length == 0 || Arrays.stream(keys).anyMatch(p -> p.trim().isEmpty())) {
