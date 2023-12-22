@@ -1,7 +1,7 @@
 # BadFlandreSearchEngine
 
 
-<img src="./.github/patchouli.gif" />
+<img src="./.github/patchouli.gif" alt="七曜的魔法使" />
 
 ヴワル魔法図書館 | 伏瓦鲁魔法图书馆 | Voile, the Magic Library
 
