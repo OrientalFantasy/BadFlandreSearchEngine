@@ -1,4 +1,5 @@
 # BadFlandreSearchEngine
+
 ヴワル魔法図書館 | 伏瓦鲁魔法图书馆 | Voile, the Magic Library
 
 
@@ -9,7 +10,7 @@
 
 # Usage
 
-there 3 command: `extract`, `index` and  `server`, they all requires a config file named `config.properties`, which looks like:
+there are 3 commands: `extract`, `index` and  `server`, all require a config file named `config.properties`, which looks like:
 
 ```properties
 mirror.path=your mirror path
@@ -17,13 +18,13 @@ files.path=your summarized files location
 index.path=your indexes files location
 ```
 
-- `mirror.path`: folder that contains html pages, it's sub path should match it's url, usually get it from spider.
+- `mirror.path`: folder that contains html pages, it's sub path should match it's url, usually got from spider.
 - `files.path`: after running the extract command, it will automatically create to store summarized files.
 - `index.path`: after running the index command, it will automatically create to store indexed files according to the summarized files in `files.path`.
 
 1. extract
 
-    this step aim to summarize the html content, it will collect `title`, `url` and `content` of given html files in a folder(`mirror.path`),
+    this step aiming to summarize the html content, it will collect `title`, `url` and `content` of given html files in a folder(`mirror.path`),
     
     then put the summarized file into `files.path` folder, naming it with md5.
     
@@ -33,7 +34,7 @@ index.path=your indexes files location
 
 2. index
     
-   this step is going to generate a `.cfs` file using the summarized files in `files.path`, as it's name, it is an index of bundle `titile`, `url`, `content` of given html files, provide for querying.
+   this step is going to generate a `.cfs` file using the summarized files in `files.path`, as it's name, it is an index of bundle `titile`, `url`, `content` of given html files, provided for querying.
     ```shell
     java -jar BadFlandreSearchEngine-0.0.1.jar index -config config.properties
     ```
@@ -49,7 +50,11 @@ index.path=your indexes files location
 
 # Build
 
-run the command below to build a runnable jar
+run the command below to build a runnable jar.
 ```shell
 gradlew jar 
 ```
+
+# Thanks
+
+ - [whiterasbk](https://github.com/whiterasbk)
