@@ -1,8 +1,5 @@
-// 动态年份
-var yearSpan = document.getElementById("year");
-yearSpan.innerText = new Date().getFullYear();
 
-const { createApp, ref, reactive, computed } = Vue;
+const { createApp, ref, reactive, computed, onBeforeUpdate} = Vue
 
 createApp({
     setup() {
@@ -15,6 +12,15 @@ createApp({
         let currentIndex = ref(0)
         let currentList = ref([])
         let isWaitingForData = ref(false)
+        let year = new Date().getFullYear().toString()
+
+        const poemList = [
+            "1", "2", "3"
+        ]
+
+        let randomPoem = () => poemList[Math.floor(Math.random() * poemList.length)]
+        let currentPoem = ref(randomPoem())
+        onBeforeUpdate(() => currentPoem.value = randomPoem())
 
         return {
             currentList,
@@ -22,6 +28,8 @@ createApp({
             totalPage,
             isWaitingForData,
             keyword,
+            currentPoem,
+            year,
             currentPage: computed(() => currentIndex.value + 1),
             previousPage() {
                 if (this.hasPreviousPage()) {
@@ -117,4 +125,6 @@ async function query(keyword) {
         }).catch((e) => reject("获取数据的时候发生错误 " + e))
     })
 }
+
+
 

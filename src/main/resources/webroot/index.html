@@ -38,6 +38,10 @@
             </div>
           </div>
 
+          <div class="mdui-row" v-if="totalItem <= 0">
+            <div style="display: flex; justify-content: center"> {{ currentPoem }} </div>
+          </div>
+
           <div v-if="isWaitingForData" class="mdui-row" style="display: flex; justify-content: center" >
             <div class="mdui-spinner mdui-spinner-colorful"></div>
           </div>
@@ -75,7 +79,7 @@
     </main>
 
     <footer id="baka-footer">
-      Copyright &copy <span id="year"></span> <a href="#">东方幻梦</a> |
+      Copyright &copy <span>{{ year }}</span> <a href="#">东方幻梦</a> |
       <a href="https://beian.miit.gov.cn/" target="_blank">滇ICP备 XXXXXXXXX 号</a>
     </footer>
     <script src="./js/script.js"></script>
