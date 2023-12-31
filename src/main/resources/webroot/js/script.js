@@ -29,6 +29,14 @@ createApp({
             currentPoem = ref(randomPoem())
         // onBeforeUpdate(() => currentPoem.value = randomPoem())
 
+        const reset = () => {
+            totalItem.value = 0
+            groupedData.value = []
+            totalPage.value = 0
+            currentList.value = []
+            currentIndex.value = 0
+        }
+
         return {
             currentList,
             totalItem,
@@ -91,10 +99,10 @@ createApp({
                             })
                             keyword.value = ''
                         } else {
+                            reset()
                             // 更新页面数据
                             totalItem.value = result.totalItem
                             groupedData.value = result.groupedData
-                            // errorMsg.value = result.errorMsg
                             totalPage.value = result.totalPage
                             currentList.value = groupedData.value[currentIndex.value]
                         }

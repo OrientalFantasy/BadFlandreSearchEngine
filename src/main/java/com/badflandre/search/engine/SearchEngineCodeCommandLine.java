@@ -118,15 +118,18 @@ class SearchEngineCodeCommandLine implements Callable<Integer> {
                 throw new RuntimeException("index.path not exists!");
             }
 
-            Vertx vertx = Vertx.vertx();
-            vertx.deployVerticle(
-                    new SearchEngineVerticle(
-                            Integer.parseInt(port),
-                            ip.toFile().getAbsolutePath(),
-                            encoding,
-                            urlDecodeEncoding
-                    )
+            SearchEngineVerticle sev = new SearchEngineVerticle(
+                    Integer.parseInt(port),
+                    ip.toFile().getAbsolutePath(),
+                    encoding,
+                    urlDecodeEncoding
             );
+
+            Vertx vertx = Vertx.vertx();
+            vertx.deployVerticle(sev);
+
+            sev.start();
+
 
             Scanner scanner = new Scanner(System.in);
             while (true) {
